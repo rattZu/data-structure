@@ -5,6 +5,7 @@
 #define MAX 100
 
 // ================= STRUCT =================
+// ✔ OK: estrutura correta, atende o projeto
 typedef struct {
     int id;
     float peso;
@@ -14,12 +15,20 @@ typedef struct {
 } Container;
 
 // ================= VARIÁVEIS =================
+// ❌ NÃO OK: está usando vetor
+// 👉 projeto pede lista duplamente encadeada
+// ✔ Solução: criar struct com ponteiros (prox e ant)
 Container containers[MAX];
 int total = 0;
 
 // ================= FUNÇÕES =================
 
 // Cadastro
+// ⚠ PARCIALMENTE OK
+// ✔ Funciona
+// ❌ Não verifica limite do array
+// ❌ Não valida dados
+// ✔ Solução: if(total < MAX) e validar valores
 void cadastrar() {
     Container c;
 
@@ -33,16 +42,18 @@ void cadastrar() {
     scanf("%f", &c.volume);
 
     printf("Origem: ");
-    scanf("%s", c.origem);
+    scanf("%s", c.origem); // ❌ não aceita espaço
+    // ✔ solução: usar fgets()
 
     printf("Destino: ");
-    scanf("%s", c.destino);
+    scanf("%s", c.destino); // ❌ não aceita espaço
 
-    containers[total++] = c;
+    containers[total++] = c; // ❌ pode estourar MAX
     printf("Container cadastrado!\n");
 }
 
 // Listar
+// ✔ OK: funciona corretamente
 void listar() {
     printf("\n=== LISTA DE CONTAINERS ===\n");
     for (int i = 0; i < total; i++) {
@@ -56,6 +67,8 @@ void listar() {
 }
 
 // Ordenar por peso
+// ✔ OK: atende o requisito
+// ⚠ simples (bubble sort), mas serve
 void ordenarPeso() {
     for (int i = 0; i < total-1; i++) {
         for (int j = 0; j < total-i-1; j++) {
@@ -70,6 +83,7 @@ void ordenarPeso() {
 }
 
 // Ordenar por volume
+// ✔ OK: mesma lógica, funciona
 void ordenarVolume() {
     for (int i = 0; i < total-1; i++) {
         for (int j = 0; j < total-i-1; j++) {
@@ -84,6 +98,11 @@ void ordenarVolume() {
 }
 
 // Simulação de custo e tempo
+// ⚠ PARCIALMENTE OK
+// ✔ cálculo funciona
+// ❌ não usa portos (ABB não existe ainda)
+// ❌ não usa fila (transporte real)
+// ✔ solução: integrar com fila e árvore depois
 void calcularRota() {
     int distancia;
     float custo, tempo;
@@ -102,6 +121,7 @@ void calcularRota() {
 }
 
 // Salvar em arquivo
+// ✔ OK: funcionalidade extra (bom ter)
 void salvar() {
     FILE *f = fopen("containers.txt", "w");
 
@@ -119,6 +139,10 @@ void salvar() {
 }
 
 // Carregar arquivo
+// ⚠ PARCIALMENTE OK
+// ✔ funciona
+// ❌ não verifica limite do array (pode estourar)
+// ✔ solução: colocar if(total < MAX)
 void carregar() {
     FILE *f = fopen("containers.txt", "r");
 
@@ -130,13 +154,15 @@ void carregar() {
                   &containers[total].volume,
                   containers[total].origem,
                   containers[total].destino) != EOF) {
-        total++;
+        total++; // ❌ pode passar do MAX
     }
 
     fclose(f);
 }
 
 // ================= MENU =================
+// ✔ OK: menu funcional
+// ❌ falta opções das estruturas (fila, pilha, etc)
 void menu() {
     int op;
 
@@ -169,3 +195,19 @@ int main() {
     menu();
     return 0;
 }
+
+// ================= O QUE FALTA FAZER =================
+//
+// ❌ Criar LISTA DUPLAMENTE ENCADEADA (obrigatório)
+// ❌ Criar FILA (transporte de containers)
+// ❌ Criar PILHA (reprocessamento)
+// ❌ Criar ÁRVORE BINÁRIA (portos)
+// ❌ Criar HISTÓRICO de embarques
+//
+// ⚠ Ajustes necessários:
+// - validar dados (peso, volume)
+// - evitar estouro do array (MAX)
+// - melhorar leitura de strings (fgets)
+//
+// ✔ Resumo:
+// Código funciona, mas está incompleto para o projeto
