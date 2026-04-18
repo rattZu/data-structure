@@ -4,6 +4,7 @@
 
 #define MAX 100
 
+// ================= STRUCT =================
 typedef struct {
     int id;
     float peso;
@@ -12,10 +13,13 @@ typedef struct {
     char destino[50];
 } Container;
 
+// ================= VARIÁVEIS =================
 Container containers[MAX];
 int total = 0;
 
+// ================= FUNÇÕES =================
 
+// Cadastro
 void cadastrar() {
     Container c;
 
@@ -38,6 +42,7 @@ void cadastrar() {
     printf("Container cadastrado!\n");
 }
 
+// Listar
 void listar() {
     printf("\n=== LISTA DE CONTAINERS ===\n");
     for (int i = 0; i < total; i++) {
@@ -50,6 +55,7 @@ void listar() {
     }
 }
 
+// Ordenar por peso
 void ordenarPeso() {
     for (int i = 0; i < total-1; i++) {
         for (int j = 0; j < total-i-1; j++) {
@@ -63,6 +69,7 @@ void ordenarPeso() {
     printf("Ordenado por peso!\n");
 }
 
+// Ordenar por volume
 void ordenarVolume() {
     for (int i = 0; i < total-1; i++) {
         for (int j = 0; j < total-i-1; j++) {
@@ -76,6 +83,7 @@ void ordenarVolume() {
     printf("Ordenado por volume!\n");
 }
 
+// Simulação de custo e tempo
 void calcularRota() {
     int distancia;
     float custo, tempo;
@@ -93,6 +101,7 @@ void calcularRota() {
     }
 }
 
+// Salvar em arquivo
 void salvar() {
     FILE *f = fopen("containers.txt", "w");
 
@@ -109,6 +118,7 @@ void salvar() {
     printf("Dados salvos!\n");
 }
 
+// Carregar arquivo
 void carregar() {
     FILE *f = fopen("containers.txt", "r");
 
@@ -126,6 +136,7 @@ void carregar() {
     fclose(f);
 }
 
+// ================= MENU =================
 void menu() {
     int op;
 
